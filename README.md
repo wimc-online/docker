@@ -2,17 +2,18 @@
 
 ## services management
 Install [ecs cli](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_CLI_installation.html).
-You can omit ` --cluster-config roma --ecs-profile roma` if `roma` profile is your default ecs config and profile.
+You can omit `--project-name roma` if you have this repository inside `roma` directory.
+You can omit `--cluster-config roma --ecs-profile roma` if `roma` profile is your default ecs config and profile.
 ```shell script
 # configure ecs cli
 ecs-cli configure --cluster roma --default-launch-type FARGATE --config-name roma --region eu-central-1
 ecs-cli configure profile --access-key $AWS_ACCESS_KEY_ID --secret-key $AWS_SECRET_ACCESS_KEY --profile-name roma
 # start services
-ecs-cli compose service up --create-log-groups --cluster-config roma --ecs-profile roma
+ecs-cli compose service up --create-log-groups --project-name roma --cluster-config roma --ecs-profile roma
 # list services
-ecs-cli compose service ps --cluster-config roma --ecs-profile roma
+ecs-cli compose service ps --project-name roma --cluster-config roma --ecs-profile roma
 # stop services
-ecs-cli compose service down --cluster-config roma --ecs-profile roma
+ecs-cli compose service down --project-name roma --cluster-config roma --ecs-profile roma
 ```
 
 ## cluster management
