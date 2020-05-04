@@ -1,6 +1,6 @@
 version: "3"
 services:
-  web:
+  api:
     image: amazon/amazon-ecs-sample
     ports:
       - "80:80"
@@ -9,4 +9,4 @@ services:
       options:
         awslogs-group: roma
         awslogs-region: eu-central-1
-        awslogs-stream-prefix: web
+        awslogs-stream-prefix: api
