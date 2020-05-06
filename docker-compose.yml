@@ -4,9 +4,3 @@ services:
     image: amazon/amazon-ecs-sample
     ports:
       - "80:80"
-    logging:
-      driver: awslogs
-      options:
-        awslogs-group: roma
-        awslogs-region: eu-central-1
-        awslogs-stream-prefix: api
