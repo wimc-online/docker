@@ -16,6 +16,8 @@ services:
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
+    labels:
+      - "traefik.http.routers.roma_traefik.tls.certresolver=lehttpchallenge"
     volumes:
       - "letsencrypt:/letsencrypt/"
 
