@@ -1,6 +1,8 @@
 version: "3"
+
 services:
-  api:
+
+  test:
     image: amazon/amazon-ecs-sample
     ports:
       - "80:80"
