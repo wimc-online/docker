@@ -2,18 +2,37 @@
 
 ## development
 ```shell script
-# check if docker compose is installed
-command -v docker-compose
+# check if htpasswd is installed
+command -v htpasswd
+# generate htpasswd entry and
+traefikHtpasswd=$(htpasswd -nb traefik password)
 # set local environment variables
 printf \
 'LE_EMAIL=
-TEST_DOMAIN=
+TRAEFIK_DOMAIN=traefik.wimc.localhost
+TRAEFIK_HTPASSWD=%s
 API_DOMAIN=api.wimc.localhost
 KEYCLOAK_DOMAIN=keycloak.wimc.localhost
-' >> .env
+' $traefikHtpasswd >> .env
+# check if docker compose is installed
+command -v docker-compose
 # start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-# open traefik dashboard on http://localhost:8080, to verify services and routers
+# open traefik dashboard on https://traefik:password@traefik.wimc.localhost, to verify configuration
+```
+
+## deployment
+```shell script
+# connect to roma instance
+ssh roma
+# change working directory to roma repository
+cd roma
+# stop containers
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml down
+# pull last changes for containers
+git pull
+# start containers
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml up -d
 ```
 
 ## EC2 instance access

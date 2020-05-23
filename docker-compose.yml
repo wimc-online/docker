@@ -4,8 +4,17 @@ services:
 
   traefik:
     image: "traefik:v2.2"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roma_traefik.rule=Host(`${TRAEFIK_DOMAIN}`)"
+      - "traefik.http.routers.roma_traefik.entrypoints=websecure"
+      - "traefik.http.routers.roma_traefik.tls=true"
+      - "traefik.http.routers.roma_traefik.service=api@internal"
+      - "traefik.http.routers.roma_traefik.middlewares=traefik-auth"
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_HTPASSWD}"
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
 
@@ -14,6 +23,8 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.roma_keycloak.rule=Host(`${KEYCLOAK_DOMAIN}`)"
+      - "traefik.http.routers.roma_keycloak.entrypoints=websecure"
+      - "traefik.http.routers.roma_keycloak.tls=true"
     restart: "unless-stopped"
 
   api:
@@ -21,4 +32,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.roma_api.rule=Host(`${API_DOMAIN}`)"
+      - "traefik.http.routers.roma_api.entrypoints=websecure"
+      - "traefik.http.routers.roma_api.tls=true"
     restart: "unless-stopped"

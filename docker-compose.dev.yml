@@ -5,17 +5,10 @@ services:
   traefik:
     command:
       - "--log.level=DEBUG"
-      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-    ports:
-      - "8080:8080"
-
-  keycloak:
-    labels:
-      - "traefik.http.routers.roma_keycloak.entrypoints=web"
-
-  api:
-    labels:
-      - "traefik.http.routers.roma_api.entrypoints=web"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--api.insecure=true"
