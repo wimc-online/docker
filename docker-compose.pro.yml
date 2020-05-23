@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+
+  traefik:
+    command:
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge=true"
+      - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL}"
+      - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "443:443"
+    volumes:
+      - "letsencrypt:/letsencrypt/"
+
+  keycloak:
+    labels:
+      - "traefik.http.routers.roma_keycloak.entrypoints=websecure"
+      - "traefik.http.routers.roma_keycloak.tls.certresolver=lehttpchallenge"
+
+  api:
+    labels:
+      - "traefik.http.routers.roma_api.entrypoints=websecure"
+      - "traefik.http.routers.roma_api.tls.certresolver=lehttpchallenge"
+
+volumes:
+
+  letsencrypt:
