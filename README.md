@@ -4,7 +4,7 @@
 ```shell script
 # check if htpasswd is installed
 command -v htpasswd
-# generate htpasswd entry and
+# generate htpasswd entry
 traefikHtpasswd=$(htpasswd -nb traefik password)
 # set local environment variables
 printf \
