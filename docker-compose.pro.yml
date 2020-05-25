@@ -4,17 +4,17 @@ services:
 
   traefik:
     command:
-      - "--log.level=DEBUG"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      # pro
+      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
     labels:
       - "traefik.http.routers.roma_traefik.tls.certresolver=lehttpchallenge"

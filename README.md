@@ -8,11 +8,13 @@ command -v htpasswd
 traefikHtpasswd=$(htpasswd -nb traefik password)
 # set local environment variables
 printf \
-'LE_EMAIL=
+'API_DOMAIN=api.wimc.localhost
+KEYCLOAK_DOMAIN=keycloak.wimc.localhost
+KEYCLOAK_PASSWORD=password
+KEYCLOAK_USER=admin
+LE_EMAIL=
 TRAEFIK_DOMAIN=traefik.wimc.localhost
 TRAEFIK_HTPASSWD=%s
-API_DOMAIN=api.wimc.localhost
-KEYCLOAK_DOMAIN=keycloak.wimc.localhost
 ' $traefikHtpasswd >> .env
 # check if docker compose is installed
 command -v docker-compose
@@ -27,12 +29,10 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 ssh roma
 # change working directory to roma repository
 cd roma
-# stop containers
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml down
 # pull last changes for containers
 git pull
-# start containers
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml up -d
+# recreate and restart containers
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --force-recreate --detach
 ```
 
 ## EC2 instance access
