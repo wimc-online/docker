@@ -40,3 +40,16 @@ services:
       - "traefik.http.routers.roma_api.rule=Host(`${API_DOMAIN}`)"
       - "traefik.http.routers.roma_api.tls=true"
     restart: "unless-stopped"
+
+  mariadb:
+    environment:
+      - "MYSQL_ROOT_PASSWORD"
+    image: "mariadb:10.5.3"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roma_mariadb.entrypoints=websecure"
+      - "traefik.http.routers.roma_mariadb.rule=Host(`${MYSQL_DOMAIN}`)"
+      - "traefik.http.routers.roma_mariadb.tls=true"
+    ports:
+      - "3306:3306"
+    restart: "always"

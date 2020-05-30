@@ -13,6 +13,8 @@ KEYCLOAK_DOMAIN=keycloak.wimc.localhost
 KEYCLOAK_PASSWORD=password
 KEYCLOAK_USER=admin
 LE_EMAIL=
+MYSQL_DOMAIN=mariadb.wimc.localhost
+MYSQL_ROOT_PASSWORD=password
 TRAEFIK_DOMAIN=traefik.wimc.localhost
 TRAEFIK_HTPASSWD=%s
 ' $traefikHtpasswd >> .env
