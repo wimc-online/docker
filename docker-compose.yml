@@ -33,13 +33,15 @@ services:
     restart: "unless-stopped"
 
   api:
-    image: "amazon/amazon-ecs-sample"
+    image: "php:7.4-apache"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.roma_api.entrypoints=websecure"
       - "traefik.http.routers.roma_api.rule=Host(`${API_DOMAIN}`)"
       - "traefik.http.routers.roma_api.tls=true"
     restart: "unless-stopped"
+    volumes:
+      - "./wimc-api:/var/www"
 
   mariadb:
     environment:
