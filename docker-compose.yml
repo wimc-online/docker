@@ -45,11 +45,16 @@ services:
     environment:
       - "MYSQL_ROOT_PASSWORD"
     image: "mariadb:10.5.3"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.roma_mariadb.entrypoints=websecure"
-      - "traefik.http.routers.roma_mariadb.rule=Host(`${MYSQL_DOMAIN}`)"
-      - "traefik.http.routers.roma_mariadb.tls=true"
     ports:
       - "3306:3306"
-    restart: "always"
+    restart: "unless-stopped"
+  phpmyadmin:
+    image: "phpmyadmin/phpmyadmin"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.roma_phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.roma_phpmyadmin.rule=Host(`${PHPMYADMIN_DOMAIN}`)"
+      - "traefik.http.routers.roma_phpmyadmin.tls=true"
+    environment:
+      - PMA_ARBITRARY=1
+    restart: "unless-stopped"
