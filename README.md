@@ -17,12 +17,17 @@ MYSQL_DOMAIN=mariadb.wimc.localhost
 MYSQL_ROOT_PASSWORD=password
 TRAEFIK_DOMAIN=traefik.wimc.localhost
 TRAEFIK_HTPASSWD=%s
+PHPMYADMIN_DOMAIN=phpmyadmin.wimc.localhost
 ' $traefikHtpasswd >> .env
 # check if docker compose is installed
 command -v docker-compose
 # start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 # open traefik dashboard on https://traefik:password@traefik.wimc.localhost, to verify configuration
+```
+## Add dev only api platform instance
+```
+git clone git@github.com:mistyfiky/agh-inz-api.git wimc-api
 ```
 
 ## deployment
