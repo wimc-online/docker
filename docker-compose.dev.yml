@@ -14,3 +14,9 @@ services:
       - "--providers.docker.exposedbydefault=false"
       # dev
       - "--log.level=DEBUG"
+  keycloak:
+    environment:
+      - "DB_VENDOR=MYSQL"
+      - "DB_ADDR=keycloak_db"
+      - "DB_USER=keycloak"
+      - "DB_PASSWORD=${MYSQL_PASSWORD}"

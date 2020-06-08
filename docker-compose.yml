@@ -31,6 +31,19 @@ services:
       - "traefik.http.routers.roma_keycloak.rule=Host(`${KEYCLOAK_DOMAIN}`)"
       - "traefik.http.routers.roma_keycloak.tls=true"
     restart: "unless-stopped"
+    depends_on:
+      - "keycloak_db"
+
+  keycloak_db:
+    environment:
+      - "MYSQL_ROOT_PASSWORD"
+      - "MYSQL_DATABASE=keycloak"
+      - "MYSQL_USER=keycloak"
+      - "MYSQL_PASSWORD"
+    image: mysql:5.7
+    command: "--default-authentication-plugin=mysql_native_password"
+    restart: "unless-stopped"
+
 
   api:
     image: "php:7.4-apache"
@@ -49,14 +62,4 @@ services:
     image: "mariadb:10.5.3"
     ports:
       - "3306:3306"
-    restart: "unless-stopped"
-  phpmyadmin:
-    image: "phpmyadmin/phpmyadmin"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.roma_phpmyadmin.entrypoints=websecure"
-      - "traefik.http.routers.roma_phpmyadmin.rule=Host(`${PHPMYADMIN_DOMAIN}`)"
-      - "traefik.http.routers.roma_phpmyadmin.tls=true"
-    environment:
-      - PMA_ARBITRARY=1
     restart: "unless-stopped"
