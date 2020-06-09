@@ -24,6 +24,10 @@ services:
       - "KEYCLOAK_USER"
       - "KEYCLOAK_PASSWORD"
       - "PROXY_ADDRESS_FORWARDING=true"
+      - "DB_USER=keycloak"
+      - "DB_PASSWORD=${MYSQL_PASSWORD}"
+      - "DB_VENDOR=MYSQL"
+      - "DB_ADDR=keycloak_db"
     image: "jboss/keycloak:10.0.1"
     labels:
       - "traefik.enable=true"
