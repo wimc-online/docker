@@ -2,32 +2,13 @@
 
 ## development
 ```shell script
-# check if htpasswd is installed
-command -v htpasswd
-# generate htpasswd entry
-traefikHtpasswd=$(htpasswd -nb traefik password)
-# set local environment variables
-printf \
-'API_DOMAIN=api.wimc.localhost
-KEYCLOAK_DOMAIN=keycloak.wimc.localhost
-KEYCLOAK_PASSWORD=password
-KEYCLOAK_USER=admin
-LE_EMAIL=
-MYSQL_ROOT_PASSWORD=
-MYSQL_PASSWORD=
-TRAEFIK_DOMAIN=traefik.wimc.localhost
-TRAEFIK_HTPASSWD=%s
-PHPMYADMIN_DOMAIN=phpmyadmin.wimc.localhost
-' $traefikHtpasswd >> .env
+# prepare local environment variables
+cp .env.dist .env
 # check if docker compose is installed
 command -v docker-compose
 # start local containers
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
-# open traefik dashboard on https://traefik:password@traefik.wimc.localhost, to verify configuration
-```
-## Add dev only api platform instance
-```
-git clone git@github.com:mistyfiky/agh-inz-api.git wimc-api
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
+# open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
 ```
 
 ## deployment
@@ -38,8 +19,10 @@ ssh roma
 cd roma
 # pull last changes for containers
 git pull
-# recreate and restart containers
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --force-recreate --detach
+# update images
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
+# update containers
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
 ```
 
 ## EC2 instance access
@@ -62,4 +45,13 @@ Host roma
 ' $romaDns $pemPath >> ~/.ssh/config
 # test ssh connection
 ssh roma
+```
+
+## misc
+- generate basicauth entry
+```shell script
+# check if htpasswd is installed
+command -v htpasswd
+# generate htpasswd entry
+echo $(htpasswd -nb user password)
 ```

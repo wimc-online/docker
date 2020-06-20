@@ -2,14 +2,21 @@ version: "3.3"
 
 services:
 
-  traefik:
+  api:
+    labels:
+      - "traefik.http.routers.api.tls.certresolver=lehttpchallenge"
+
+  auth:
+    labels:
+      - "traefik.http.routers.keycloak.tls.certresolver=lehttpchallenge"
+
+  router:
     command:
       - "--api.insecure=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      - "--log.level=DEBUG"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       # pro
@@ -18,17 +25,9 @@ services:
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
     labels:
-      - "traefik.http.routers.roma_traefik.tls.certresolver=lehttpchallenge"
+      - "traefik.http.routers.traefik.tls.certresolver=lehttpchallenge"
     volumes:
       - "letsencrypt:/letsencrypt/"
-
-  keycloak:
-    labels:
-      - "traefik.http.routers.roma_keycloak.tls.certresolver=lehttpchallenge"
-
-  api:
-    labels:
-      - "traefik.http.routers.roma_api.tls.certresolver=lehttpchallenge"
 
 volumes:
 

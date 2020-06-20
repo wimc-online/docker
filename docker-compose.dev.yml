@@ -2,14 +2,21 @@ version: "3.3"
 
 services:
 
-  traefik:
+  api:
+    volumes:
+      - "${API_PATH}:/app"
+
+  api_db:
+    ports:
+      - "3306:3306"
+
+  router:
     command:
       - "--api.insecure=true"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
-      - "--log.level=DEBUG"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       # dev
