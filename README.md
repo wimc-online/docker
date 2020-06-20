@@ -11,12 +11,8 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
 # open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
 ```
 
-## Deployment
+## Updating
 ```shell script
-# connect to roma instance
-ssh roma
-# change working directory to roma repository
-cd roma
 # pull last changes for containers
 git pull
 # update images
