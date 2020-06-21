@@ -26,8 +26,7 @@ docker-compose -f docker-compose.yml -f docker-compose.pro.yml exec api bin/cons
 ```shell script
 # start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
-# sync database tables structure
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml exec api bin/console doctrine:schema:update --force
+# follow development sections from sub-projects readme
 # open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
 ```
 
