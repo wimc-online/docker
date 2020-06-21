@@ -21,3 +21,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       # dev
       - "--log.level=DEBUG"
+      - "--providers.file.filename=/etc/traefik/certs.yml"
+    volumes:
+      - "./config/traefik/certs.yml:/etc/traefik/certs.yml"
+      - "./certs:/etc/traefik/certs"
