@@ -8,7 +8,7 @@ services:
 
   auth:
     labels:
-      - "traefik.http.routers.keycloak.tls.certresolver=lehttpchallenge"
+      - "traefik.http.routers.auth.tls.certresolver=lehttpchallenge"
 
   router:
     command:
@@ -25,7 +25,7 @@ services:
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
     labels:
-      - "traefik.http.routers.traefik.tls.certresolver=lehttpchallenge"
+      - "traefik.http.routers.router.tls.certresolver=lehttpchallenge"
     volumes:
       - "letsencrypt:/letsencrypt/"
 
