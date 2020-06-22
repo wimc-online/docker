@@ -12,14 +12,17 @@ docker login https://docker.pkg.github.com
 
 ## Deployment
 ```shell script
+# log into server
+ssh grindor@wimc.online
+# go to docker repository
+cd wimc.online
 # pull last changes for repository
 git pull
 # update images
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
+dcpro pull
 # update containers
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
-# sync database tables structure
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml exec api bin/console doctrine:schema:update --force
+dcpro up --detach
+# follow development sections from sub-projects readme
 ```
 
 ## Development
