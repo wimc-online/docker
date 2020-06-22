@@ -19,9 +19,9 @@ cd wimc.online
 # pull last changes for repository
 git pull
 # update images
-dcpro pull
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
 # update containers
-dcpro up --detach
+docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
 # follow development sections from sub-projects readme
 ```
 
