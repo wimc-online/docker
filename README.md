@@ -10,37 +10,15 @@ command -v docker-compose
 docker login https://docker.pkg.github.com
 ```
 
-## Deployment
-```shell script
-# log into server
-ssh grindor@wimc.online
-# go to docker repository
-cd wimc.online
-# pull last changes for repository
-git pull
-# update images
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
-# update containers
-docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
-# follow development sections from sub-projects readme
-```
-
 ## Development
-```shell script
-# start local containers
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
-# follow development sections from sub-projects readme
-# open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
-```
-
-## Updating
 ```shell script
 # pull last changes for repository
 git pull
 # update images
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull
-# update containers
+# start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
+# open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
 ```
 
 ## Misc

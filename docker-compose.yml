@@ -4,7 +4,9 @@ services:
 
   api:
     depends_on:
+      - "router"
       - "api_db"
+      - "api_schema_update"
     image: "docker.pkg.github.com/wimc-online/api/api:latest"
     labels:
       - "traefik.enable=true"
@@ -25,8 +27,16 @@ services:
     volumes:
       - "api_db:/var/lib/mysql"
 
+  api_schema_update:
+    command: "bin/console doctrine:schema:update --force"
+    depends_on:
+      - "api_db"
+    image: "docker.pkg.github.com/wimc-online/api/api:latest"
+    restart: "no"
+
   auth:
     depends_on:
+      - "router"
       - "auth_db"
     environment:
       - "DB_ADDR=auth_db"
