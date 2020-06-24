@@ -20,7 +20,7 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       # pro
-      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL}"
+      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL:-mistyfiky+grindor@gmail.com}"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"

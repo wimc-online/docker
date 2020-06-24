@@ -11,7 +11,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.rule=Host(`${API_DOMAIN}`)"
+      - "traefik.http.routers.api.rule=Host(`${API_DOMAIN:-api.wimc.online}`)"
       - "traefik.http.routers.api.tls=true"
     restart: "unless-stopped"
 
@@ -32,7 +32,7 @@ services:
     depends_on:
       - "api_db"
     image: "docker.pkg.github.com/wimc-online/api/api:0.0.1"
-    restart: "no"
+    restart: "on-failure"
 
   auth:
     depends_on:
@@ -51,7 +51,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.auth.entrypoints=websecure"
-      - "traefik.http.routers.auth.rule=Host(`${AUTH_DOMAIN}`)"
+      - "traefik.http.routers.auth.rule=Host(`${AUTH_DOMAIN:-auth.wimc.online}`)"
       - "traefik.http.routers.auth.tls=true"
     restart: "unless-stopped"
 
@@ -74,7 +74,7 @@ services:
       - "traefik.http.middlewares.traefik-auth.basicauth.users=user:$$apr1$$TqPaHVlK$$WMysyGKdwM9RzlGGRNtwU1"
       - "traefik.http.routers.router.entrypoints=websecure"
       - "traefik.http.routers.router.middlewares=traefik-auth"
-      - "traefik.http.routers.router.rule=Host(`${ROUTER_DOMAIN}`)"
+      - "traefik.http.routers.router.rule=Host(`${ROUTER_DOMAIN:-router.wimc.online}`)"
       - "traefik.http.routers.router.service=api@internal"
       - "traefik.http.routers.router.tls=true"
     ports:
