@@ -1,6 +1,7 @@
 # Docker for "Where is my courier?"
+![Deploy to host](https://github.com/wimc-online/docker/workflows/Deploy%20to%20host/badge.svg)
 
-## Prerequisites
+## Development
 ```shell script
 # check if docker is installed
 command -v docker
@@ -8,17 +9,12 @@ command -v docker
 command -v docker-compose
 # login to github packages with personal access token
 docker login https://docker.pkg.github.com
-```
-
-## Development
-```shell script
 # pull last changes for repository
 git pull
 # update images
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull
 # start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
-# open router dashboard on https://user:password@router.wimc.localhost, to verify configuration
 ```
 
 ## Misc
