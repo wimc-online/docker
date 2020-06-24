@@ -20,7 +20,8 @@ jobs:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         DOCKER_HOST: ssh://${{ secrets.USER }}@${{ secrets.HOST }}
       run: |
-        docker context create remote ‐‐docker "host=$DOCKER_HOST"
+        echo $DOCKER_HOST
+        docker context create remote ‐‐docker host=$DOCKER_HOST
         docker context use remote
         docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
         docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
