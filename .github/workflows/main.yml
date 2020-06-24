@@ -20,7 +20,6 @@ jobs:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         DOCKER_HOST: ssh://${{ secrets.USER }}@${{ secrets.HOST }}
       run: |
-        docker context create remote --docker "host=$DOCKER_HOST"
-        docker context use remote
+        echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://docker.pkg.github.com -u "${{ secrets.USER }}"
         docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
         docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
