@@ -1,0 +1,24 @@
+name: Deploy to host
+on:
+  release:
+    types: [published]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup SSH Keys and known_hosts
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+    - name: Pull docker images and update services
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        DOCKER_HOST: ssh://${{ secrets.USER }}@${{ secrets.HOST }}
+      run: |
+        docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
+        docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
