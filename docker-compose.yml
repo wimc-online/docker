@@ -6,8 +6,7 @@ services:
     depends_on:
       - "router"
       - "api_db"
-      - "api_schema_update"
-    image: "docker.pkg.github.com/wimc-online/api/api:0.0.1"
+    image: "docker.pkg.github.com/wimc-online/api/api:0.0.2"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.api.entrypoints=websecure"
@@ -27,13 +26,6 @@ services:
     volumes:
       - "api_db:/var/lib/mysql"
 
-  api_schema_update:
-    command: "bin/console doctrine:schema:update --force"
-    depends_on:
-      - "api_db"
-    image: "docker.pkg.github.com/wimc-online/api/api:0.0.1"
-    restart: "on-failure"
-
   auth:
     depends_on:
       - "router"
@@ -47,7 +39,7 @@ services:
       - "KEYCLOAK_PASSWORD=password"
       - "KEYCLOAK_USER=user"
       - "PROXY_ADDRESS_FORWARDING=true"
-    image: "jboss/keycloak:10.0.1"
+    image: "docker.pkg.github.com/wimc-online/auth/auth:0.0.1"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.auth.entrypoints=websecure"

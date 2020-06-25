@@ -5,14 +5,14 @@ services:
   api:
     image: "docker.pkg.github.com/wimc-online/api/api:latest"
     volumes:
-      - "${API_PATH:-./app}:/app"
-
-  api_schema_update:
-    image: "docker.pkg.github.com/wimc-online/api/api:latest"
+      - "${API_PATH:?}:/app"
 
   api_db:
     ports:
       - "3306:3306"
+
+  auth:
+    image: "docker.pkg.github.com/wimc-online/auth/auth:latest"
 
   router:
     command:

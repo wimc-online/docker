@@ -9,21 +9,12 @@ command -v docker
 command -v docker-compose
 # login to github packages with personal access token
 docker login https://docker.pkg.github.com
-# pull last changes for repository
-git pull
+# prepare local env variables
+cp .env.dist .env
 # update images
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull
 # start local containers
 docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
-```
-
-## Misc
-- generate basicauth entry
-```shell script
-# check if htpasswd is installed
-command -v htpasswd
-# generate htpasswd entry
-echo $(htpasswd -nb user password)
 ```
 
 ## Links
