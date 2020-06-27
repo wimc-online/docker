@@ -1,13 +1,21 @@
-version: "3.3"
+version: "3.4"
 
 services:
 
   api:
     labels:
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls=true"
+      # remote
+      - "traefik.http.routers.api.rule=Host(`${API_DOMAIN:-api.wimc.online}`)"
       - "traefik.http.routers.api.tls.certresolver=lehttpchallenge"
 
   auth:
     labels:
+      - "traefik.http.routers.auth.entrypoints=websecure"
+      - "traefik.http.routers.auth.tls=true"
+      # remote
+      - "traefik.http.routers.auth.rule=Host(`${AUTH_DOMAIN:-auth.wimc.online}`)"
       - "traefik.http.routers.auth.tls.certresolver=lehttpchallenge"
 
   router:
@@ -19,12 +27,17 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      # pro
-      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL:-mistyfiky+grindor@gmail.com}"
+      - "--log.level=DEBUG"
+      # remote
+      - "--certificatesresolvers.lehttpchallenge.acme.email=${LE_EMAIL:?}"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge=true"
       - "--certificatesresolvers.lehttpchallenge.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.lehttpchallenge.acme.storage=/letsencrypt/acme.json"
     labels:
+      - "traefik.http.routers.router.entrypoints=websecure"
+      - "traefik.http.routers.router.tls=true"
+      # remote
+      - "traefik.http.routers.router.rule=Host(`${ROUTER_DOMAIN:-router.wimc.online}`)"
       - "traefik.http.routers.router.tls.certresolver=lehttpchallenge"
     volumes:
       - "letsencrypt:/letsencrypt/"

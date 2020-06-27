@@ -1,0 +1,38 @@
+version: "3.4"
+
+services:
+
+  api:
+    labels:
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls=true"
+      # local
+      - "traefik.http.routers.api.rule=Host(`${API_DOMAIN:-api.wimc.localhost}`)"
+
+  auth:
+    labels:
+      - "traefik.http.routers.auth.entrypoints=websecure"
+      - "traefik.http.routers.auth.tls=true"
+      # local
+      - "traefik.http.routers.auth.rule=Host(`${AUTH_DOMAIN:-auth.wimc.localhost}`)"
+
+  router:
+    command:
+      - "--api.insecure=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--log.level=DEBUG"
+      # local
+      - "--providers.file.filename=/etc/traefik/certs.yml"
+    labels:
+      - "traefik.http.routers.router.entrypoints=websecure"
+      - "traefik.http.routers.router.tls=true"
+      # local
+      - "traefik.http.routers.router.rule=Host(`${ROUTER_DOMAIN:-router.wimc.localhost}`)"
+    volumes:
+      - "./config/traefik/certs.yml:/etc/traefik/certs.yml"
+      - "./certs:/etc/traefik/certs"

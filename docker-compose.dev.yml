@@ -1,8 +1,11 @@
-version: "3.3"
+version: "3.4"
 
 services:
 
   api:
+    environment:
+      - "APP_ENV=dev"
+      - "APP_DEBUG=1"
     image: "docker.pkg.github.com/wimc-online/api/api:latest"
     volumes:
       - "${API_PATH:?}:/app"
@@ -13,19 +16,3 @@ services:
 
   auth:
     image: "docker.pkg.github.com/wimc-online/auth/auth:latest"
-
-  router:
-    command:
-      - "--api.insecure=true"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      # dev
-      - "--log.level=DEBUG"
-      - "--providers.file.filename=/etc/traefik/certs.yml"
-    volumes:
-      - "./config/traefik/certs.yml:/etc/traefik/certs.yml"
-      - "./certs:/etc/traefik/certs"

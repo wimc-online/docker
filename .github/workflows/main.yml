@@ -12,14 +12,15 @@ jobs:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
       run: |
         mkdir -p ~/.ssh
-        ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan ${{ secrets.DOCKER_HOST }} >> ~/.ssh/known_hosts
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+        ssh-add - <<< "${{ secrets.DOCKER_PRIVATE_KEY }}"
     - name: Pull docker images and update services
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-        DOCKER_HOST: ssh://${{ secrets.USER }}@${{ secrets.HOST }}
+        DOCKER_HOST: ssh://${{ secrets.DOCKER_USER }}@${{ secrets.DOCKER_HOST }}
+        LE_EMAIL: ${{ secrets.LE_EMAIL }}
       run: |
-        echo "${{ secrets.PASSWORD }}" | docker login https://docker.pkg.github.com -u "${{ secrets.USER }}" --password-stdin
-        docker-compose -f docker-compose.yml -f docker-compose.pro.yml pull
-        docker-compose -f docker-compose.yml -f docker-compose.pro.yml up --detach
+        echo "${{ secrets.GPR_PASSWORD }}" | docker login https://docker.pkg.github.com -u "${{ secrets.GPR_USER }}" --password-stdin
+        docker-compose -f docker-compose.yml -f docker-compose.remote.yml -f docker-compose.prod.yml pull
+        docker-compose -f docker-compose.yml -f docker-compose.remote.yml -f docker-compose.prod.yml up --detach

@@ -10,11 +10,11 @@ command -v docker-compose
 # login to github packages with personal access token
 docker login https://docker.pkg.github.com
 # prepare local env variables
-cp .env.dist .env
+cp .env.dev.dist .env
 # update images
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml pull
+docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml pull
 # start local containers
-docker-compose -f docker-compose.yml -f docker-compose.dev.yml up --detach
+docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml up --detach
 ```
 
 ## Links
