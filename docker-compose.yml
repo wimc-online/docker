@@ -6,6 +6,8 @@ services:
     depends_on:
       - "router"
       - "api_db"
+    environment:
+      - "JWT_PUBLIC_KEY=$API_JWT_PUBLIC_KEY"
     labels:
       - "traefik.enable=true"
     restart: "unless-stopped"
