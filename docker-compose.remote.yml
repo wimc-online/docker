@@ -10,6 +10,14 @@ services:
       - "traefik.http.routers.api.rule=Host(`${API_DOMAIN:-api.wimc.online}`)"
       - "traefik.http.routers.api.tls.certresolver=lehttpchallenge"
 
+  app:
+    labels:
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls=true"
+      # remote
+      - "traefik.http.routers.app.rule=Host(`${APP_DOMAIN:-app.wimc.online}`)"
+      - "traefik.http.routers.app.tls.certresolver=lehttpchallenge"
+
   auth:
     labels:
       - "traefik.http.routers.auth.entrypoints=websecure"

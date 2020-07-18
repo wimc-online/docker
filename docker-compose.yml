@@ -11,7 +11,7 @@ services:
     labels:
       - "traefik.enable=true"
     restart: "unless-stopped"
-    user: application:application
+    user: "application:application"
 
   api_db:
     command: "--default-authentication-plugin=mysql_native_password"
@@ -24,6 +24,13 @@ services:
     restart: "unless-stopped"
     volumes:
       - "api_db:/var/lib/mysql"
+
+  app:
+    depends_on:
+      - "router"
+    labels:
+      - "traefik.enable=true"
+    restart: "unless-stopped"
 
   auth:
     depends_on:

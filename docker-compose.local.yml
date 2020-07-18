@@ -9,6 +9,13 @@ services:
       # local
       - "traefik.http.routers.api.rule=Host(`${API_DOMAIN:-api.wimc.localhost}`)"
 
+  app:
+    labels:
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls=true"
+      # local
+      - "traefik.http.routers.app.rule=Host(`${APP_DOMAIN:-app.wimc.localhost}`)"
+
   auth:
     labels:
       - "traefik.http.routers.auth.entrypoints=websecure"
