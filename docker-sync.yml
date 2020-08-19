@@ -1,0 +1,6 @@
+version: "2"
+
+syncs:
+
+  api-sync:
+    src: ${API_PATH}

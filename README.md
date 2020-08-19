@@ -12,9 +12,19 @@ docker login https://docker.pkg.github.com
 # prepare local env variables
 cp .env.dev.dist .env
 # update images
-docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml pull
+docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml -f docker-compose.dev.$(uname -s).yml pull
 # start local containers
-docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml up --detach
+docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml -f docker-compose.dev.$(uname -s).yml up --detach
+```
+
+## Darwin
+```shell script
+# install docker-sync
+sudo gem install docker-sync -n /usr/local/bin
+# start docker-sync
+docker-sync start
+# add domains to /etc/hosts
+echo '127.0.0.1 api.wimc.localhost app.wimc.localhost auth.wimc.localhost router.wimc.localhost' >> /etc/hosts
 ```
 
 ## Links
