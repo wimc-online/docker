@@ -4,3 +4,4 @@ syncs:
 
   api-sync:
     src: ${API_PATH}
+    sync_excludes: ['.git', '.idea']
