@@ -11,10 +11,12 @@ command -v docker-compose
 docker login https://docker.pkg.github.com
 # prepare local env variables
 cp .env.dev.dist .env
+# prepare aliases
+source .aliases
 # update images
-docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml -f docker-compose.dev.$(uname -s).yml pull
+wimcdc pull
 # start local containers
-docker-compose -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml -f docker-compose.dev.$(uname -s).yml up --detach
+wimcdc up -d
 ```
 
 ## Darwin
@@ -25,6 +27,12 @@ sudo gem install docker-sync -n /usr/local/bin
 docker-sync start
 # add domains to /etc/hosts
 echo '127.0.0.1 api.wimc.localhost app.wimc.localhost auth.wimc.localhost router.wimc.localhost' >> /etc/hosts
+```
+
+## Troubleshooting
+```shell script
+# api keep restarting
+wimcdc pull api && wimcdc up -d --force-recreate api
 ```
 
 ## Links
