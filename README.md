@@ -33,6 +33,8 @@ echo '127.0.0.1 api.wimc.localhost app.wimc.localhost auth.wimc.localhost router
 ```shell script
 # api keep restarting
 wimcdc pull api && wimcdc up -d --force-recreate api
+# clear docker-sync cache
+docker-sync stop && docker-sync clean && docker-sync start
 ```
 
 ## Links
