@@ -6,7 +6,7 @@ services:
     image: "docker.pkg.github.com/wimc-online/api/api:0.0.7"
 
   app:
-    image: "docker.pkg.github.com/wimc-online/app/app:0.0.8"
+    image: "docker.pkg.github.com/wimc-online/app/app:0.0.9"
 
   auth:
     image: "docker.pkg.github.com/wimc-online/auth/auth:0.0.1"
