@@ -8,6 +8,10 @@ services:
       - "api_db"
     environment:
       - "JWT_PUBLIC_KEY=$API_JWT_PUBLIC_KEY"
+      - "KEYCLOAK_DOMAIN=$API_KEYCLOAK_DOMAIN"
+      - "KEYCLOAK_REALM=$API_KEYCLOAK_REALM"
+      - "KEYCLOAK_CLIENT_ID=$API_KEYCLOAK_CLIENT_ID"
+      - "KEYCLOAK_CLIENT_SECRET=$API_KEYCLOAK_CLIENT_SECRET"
     labels:
       - "traefik.enable=true"
     restart: "unless-stopped"
