@@ -21,6 +21,10 @@ jobs:
         DOCKER_HOST: ssh://${{ secrets.DOCKER_USER }}@${{ secrets.DOCKER_HOST }}
         LE_EMAIL: ${{ secrets.LE_EMAIL }}
         API_JWT_PUBLIC_KEY: ${{ secrets.API_JWT_PUBLIC_KEY }}
+        API_KEYCLOAK_DOMAIN: ${{ secrets.API_KEYCLOAK_DOMAIN }}
+        API_KEYCLOAK_REALM: ${{ secrets.API_KEYCLOAK_REALM }}
+        API_KEYCLOAK_CLIENT_ID: ${{ secrets.API_KEYCLOAK_CLIENT_ID }}
+        API_KEYCLOAK_CLIENT_SECRET: ${{ secrets.API_KEYCLOAK_CLIENT_SECRET }}
       run: |
         echo "${{ secrets.GPR_PASSWORD }}" | docker login https://docker.pkg.github.com -u "${{ secrets.GPR_USER }}" --password-stdin
         docker-compose --no-ansi -f docker-compose.yml -f docker-compose.remote.yml -f docker-compose.prod.yml pull
