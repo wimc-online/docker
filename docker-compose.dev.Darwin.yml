@@ -4,9 +4,4 @@ services:
 
   api:
     volumes:
-      - "api-sync:/app:nocopy"
-
-volumes:
-
-  api-sync:
-    external: true
+      - "${API_PATH:?}:/app"
