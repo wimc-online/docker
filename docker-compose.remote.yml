@@ -50,6 +50,10 @@ services:
     volumes:
       - "letsencrypt:/letsencrypt/"
 
+  api_db:
+    ports:
+      - "3306:3306"
+
 volumes:
 
   letsencrypt:
