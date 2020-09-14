@@ -3,7 +3,7 @@ version: "3.4"
 services:
 
   api:
-    image: "docker.pkg.github.com/wimc-online/api/api:0.0.14"
+    image: "docker.pkg.github.com/wimc-online/api/api:0.0.15"
 
   app:
     image: "docker.pkg.github.com/wimc-online/app/app:0.0.15"
